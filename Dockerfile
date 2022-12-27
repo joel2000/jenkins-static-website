@@ -1,4 +1,4 @@
-FROM nginx:1.22.1
+FROM nginx
 MAINTAINER jkouassi (kouassi.joel052@gmail.com)
 RUN apt-get update && \
     apt-get upgrade -y && \

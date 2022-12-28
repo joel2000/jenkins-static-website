@@ -1,8 +1,11 @@
-FROM ubuntu:18.04
+FROM nginx:1.22.1
 MAINTAINER jkouassi (kouassi.joel052@gmail.com)
-RUN apt-get update
-RUN apt-get install -y nginx git curl
-RUN git clone https://github.com/diranetafen/static-website-example.git
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y curl && \
+    apt-get install -y git
 EXPOSE 80
-ADD static-website-example/ /var/www/html/
-ENTRYPOINT [ "nginx", "-q", "daemon off;" ]
+RUN rm -Rf /usr/share/nginx/html/*
+RUN git clone https://github.com/diranetafen/static-website-example.git /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+ENTRYPOINT ["nginx", "-q", "daemon off;"]

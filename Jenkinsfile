@@ -6,7 +6,7 @@ pipeline {
        PORT_EXPOSED = "80" 
        APP_NAME = "webstatic"
        STG_API_ENDPOINT = "ip10-0-0-3-cem2d9omjkegg872c9qg-1993.direct.docker.labs.eazytraining.fr"
-       STG_APP_ENDPOINT = "ip10-0-0-3-cem2d9omjkegg872c9qg-80.direct.docker.labs.eazytraining.fr"
+       STG_APP_ENDPOINT = "ip10-0-0-3-cem2d9omjkegg872c9qg-8080.direct.docker.labs.eazytraining.fr"
        PROD_API_ENDPOINT = "ip10-0-0-4-cem2d9omjkegg872c9qg-1993.direct.docker.labs.eazytraining.fr"
        PROD_APP_ENDPOINT = "ip10-0-0-4-cem2d9omjkegg872c9qg-80.direct.docker.labs.eazytraining.fr"
        INTERNAL_PORT = "80"

@@ -75,7 +75,6 @@ pipeline {
         environment {
            DOCKERHUB_PASSWORD  = credentials('dockerhub-credentials')
         } 
-          agent any
           steps {
              script {
                sh '''

@@ -74,7 +74,8 @@ pipeline {
           agent any
         environment {
            DOCKERHUB_PASSWORD  = credentials('dockerhub-credentials')
-        }            
+        } 
+          agent any
           steps {
              script {
                sh '''
@@ -86,13 +87,16 @@ pipeline {
       }    
      
      stage('STAGING - Deploy app') {
+         when {
+              expression { GIT_BRANCH == 'origin/main' }
+            }
       agent any
       steps {
           script {
-            sh """
+            sh '''
               echo  {\\"your_name\\":\\"${APP_NAME}\\",\\"container_image\\":\\"${CONTAINER_IMAGE}\\", \\"external_port\\":\\"${EXTERNAL_PORT}\\", \\"internal_port\\":\\"${INTERNAL_PORT}\\"}  > data.json 
               curl -v -X POST http://${STG_API_ENDPOINT}/staging -H 'Content-Type: application/json'  --data-binary @data.json 
-            """
+            '''
           }
         }
      }
@@ -102,12 +106,12 @@ pipeline {
               expression { GIT_BRANCH == 'origin/main' }
             }
       agent any
-
       steps {
           script {
-            sh """
-               curl -v -X POST http://${PROD_API_ENDPOINT}/prod -H 'Content-Type: application/json' -d '{"your_name":"${APP_NAME}","container_image":"${CONTAINER_IMAGE}", "external_port":"${EXTERNAL_PORT}", "internal_port":"${INTERNAL_PORT}"}'
-               """
+            sh '''
+               echo  {\\"your_name\\":\\"${APP_NAME}\\",\\"container_image\\":\\"${CONTAINER_IMAGE}\\", \\"external_port\\":\\"${EXTERNAL_PORT}\\", \\"internal_port\\":\\"${INTERNAL_PORT}\\"}  > data.json 
+               curl -v -X POST http://${PROD_API_ENDPOINT}/prod -H 'Content-Type: application/json' --data-binary @data.json
+            '''
           }
         }
      }
